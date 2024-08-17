@@ -1,0 +1,233 @@
+﻿@{
+    ViewData["Title"] = "Cart";
+}
+<style>
+    body {
+        background-color: #f0f8ff; /* Light Azure */
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 20px;
+    }
+
+    .cart {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+        .cart h1 {
+            text-shadow: 2px 2px 0.5px grey;
+            font-size: 2.5em;
+            color: #333;
+        }
+
+    .mycart {
+        text-align: center;
+        font-size: large;
+        margin: 20px 0;
+        padding: 10px;
+        border: 2px solid #333;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        font-size: 1em;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+        table th, table td {
+            padding: 12px;
+            text-align: center;
+            border: 2px solid #333;
+        }
+
+        table th {
+            background-color: #ffebcd; /* Blanched Almond */
+            color: #333;
+        }
+
+        table tr:hover {
+            background-color: #ffe4b5; /* Moccasin */
+        }
+
+    button {
+        margin: 20px;
+        padding: 10px 20px;
+        background-color: #ffebcd; /* Blanched Almond */
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1em;
+        color: #333;
+        text-shadow: 1px 1px 1px black;
+        transition: background-color 0.3s ease;
+    }
+
+        button:hover {
+            background-color: #ffd700; /* Gold */
+            color: #fff;
+        }
+
+    #content {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 1.2em;
+        color: #333;
+    }
+</style>
+
+<div class="cart">
+    <h1>Cart</h1>
+</div>
+
+<div class="mycart">My Cart Details</div>
+
+<table>
+    <thead class="headers">
+        <tr>
+            <th>Burger Type</th>
+            <th>Burger Category</th>
+            <th>Burger Price</th>
+            <th>Burger Quantity</th>
+            <th>Burger Total Price</th>
+            <th>Remove</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Cart items will be dynamically inserted here -->
+    </tbody>
+</table>
+
+<button id="placeOrder">Place Order</button>
+<button id="goBack" onclick="goBack()">Go Back</button>
+<br />
+
+<div id="content"></div>
+<script>
+
+    const cartData = JSON.parse(localStorage.getItem("cart"));
+
+    function addRow() {
+        const tableBody = document.querySelector("table tbody");
+        for (const key in cartData) {
+            console.log(cartData[key]);
+            const row = document.createElement("tr");
+            const burgerType = document.createElement("td");
+            const burgerCategory = document.createElement("td");
+            const burgerPrice = document.createElement("td");
+            const burgerQuantity = document.createElement("td");
+            const burgerTotalPrice = document.createElement("td");
+            const burgerRemove = document.createElement("td");
+            const removeButton = document.createElement("button");
+            burgerType.textContent = cartData[key].Name;
+            burgerCategory.textContent = cartData[key].Category;
+            burgerQuantity.textContent = cartData[key].Quantity;
+            burgerPrice.textContent = cartData[key].Price;
+            //burgerTotalPrice.textContent = cartData[key].Price * cartData[key].Quantity;
+            burgerTotalPrice.textContent = cartData[key].TotalPrice
+            removeButton.textContent = "❌";
+            removeButton.addEventListener("click", () => removeItem(key));
+            burgerRemove.appendChild(removeButton);
+            row.appendChild(burgerType);
+            row.appendChild(burgerCategory);
+            row.appendChild(burgerPrice);
+            row.appendChild(burgerQuantity);
+            row.appendChild(burgerTotalPrice);
+            row.appendChild(burgerRemove);
+            tableBody.appendChild(row);
+        }
+    }
+
+    function removeItem(index) {
+        cartData.splice(index, 1);
+        localStorage.setItem("cart", JSON.stringify(cartData));
+        updateTable();
+    }
+
+    function updateTable() {
+        const tableBody = document.querySelector("table tbody");
+        tableBody.innerHTML = "";
+        addRow();
+    }
+
+    function goBack() {
+        window.history.back();
+    }
+
+
+    addRow();
+
+    const placeOrder = document.getElementById("placeOrder");
+
+    placeOrder.addEventListener("click", function () {
+        const content = document.getElementById("content");
+        const para = document.createElement("p");
+        //console.log("Working-1");
+        if (cartData == null) {
+            //para.textContent = "Your cart is empty. Please add items to your cart before placing an order.";
+            alert("Your cart is empty. Please add items to your cart before placing an order.");
+            //content.appendChild(para);
+            return;
+        }
+        let overAllCost = 0;
+        let totalQuantity = 0;
+        const orderItems = [];
+
+        for (const key in cartData) {
+            totalQuantity += cartData[key].Quantity;
+            overAllCost += cartData[key].TotalPrice;
+
+            // Prepare order items for sending to the server
+            orderItems.push({
+                BurgerType: cartData[key].Name,
+                UserId:cartData[key].UserId,
+                BurgerCategory: cartData[key].Category,
+                Price: cartData[key].Price,
+                Quantity: cartData[key].Quantity,
+                TotalPrice: cartData[key].TotalPrice
+            });
+        }
+
+        // Send order data to the server
+        fetch('/BurgerShop/PlaceOrder', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(orderItems)
+        })
+            .then(response => {
+                if (response.ok) {
+                    // Clear local storage
+                    localStorage.removeItem("cart");
+                    //para.textContent = "Order placed successfully!";
+                    alert("Order placed Sucessfully!");
+                    window.location.reload();
+                    //window.location.href = `/BurgerShop/BurgerPage/${data.userId}`;
+                }
+                else if (response.status === 401) {
+                    // Handle 401 Unauthorized error
+                    para.textContent = "Token expired. Please log in to the application again.";
+                    content.appendChild(para);
+                    // Optionally, redirect to login page
+                    setTimeout(() => {
+                        window.location.href = '/BurgerShop/Login';
+                    }, 3000); // Redirect after 3 seconds
+                }
+                else {
+                    para.textContent = "Failed to place the order. Please try again.";
+                }
+                content.appendChild(para);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                para.textContent = "An error occurred while placing the order.";
+                content.appendChild(para);
+            });
+    });
+
+</script>

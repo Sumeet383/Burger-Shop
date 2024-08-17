@@ -1,0 +1,39 @@
+﻿@model Menu
+@{
+    ViewData["Title"] = "Create Menu Item";
+}
+
+<h2 class="text-center my-4">Create Menu Item</h2>
+
+<div class="container">
+    <form method="post" asp-controller="Admin" asp-action="CreateMenuItem" class="bg-light p-4 rounded shadow">
+        <input type="hidden" name="userId" value="@ViewBag.UserId" />
+        <div class="mb-3">
+            <label class="form-label" asp-for="BurgerName">Burger Name</label>
+            <input type="text" class="form-control" asp-for="BurgerName" required />
+            <span class="text-danger" asp-validation-for="BurgerName"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" asp-for="Description">Description</label>
+            <textarea class="form-control" asp-for="Description" required></textarea>
+            <span class="text-danger" asp-validation-for="Description"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" asp-for="BasePrice">Base Price</label>
+            <input type="number" class="form-control" asp-for="BasePrice" required />
+            <span class="text-danger" asp-validation-for="BasePrice"></span>
+        </div>
+
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-primary">Create Menu Item</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

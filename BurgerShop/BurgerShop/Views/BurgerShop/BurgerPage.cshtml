@@ -1,0 +1,158 @@
+﻿@{
+    ViewData["Title"] = "BurgerPage";
+}
+@model BurgerShop.ViewModels.BurgerPageViewModel
+<h3 class="text-center my-4 text-danger display-4 animated pulse">Menu</h3>
+@if (Model != null)
+{
+    <h4 class="text-center text-info">Mobile No: @Model.User.MobileNo</h4>
+    <h4 class="text-start text-warning fw-bold">Role: @Model.User.Role</h4>
+    <h4 class="text-end mb-5">
+        <a class="btn btn-outline-danger btn-sm" asp-controller="BurgerShop" asp-action="Logout">
+            <i class="fas fa-sign-out-alt"></i> Logout
+        </a>
+    </h4>
+
+
+    @foreach (var burger in Model.Menus)
+    {
+        <div class="row p-2 bg-white border rounded">
+            <div class="col-md-3 mt-1">
+                <img class="img-fluid img-responsive rounded product-image" src="@Url.Content(burger.ImageUrl)" alt="@burger.BurgerName">
+            </div>
+            <div class="col-md-6 mt-1">
+                <h5>@burger.BurgerName</h5>
+                <div class="d-flex flex-row">
+                    <select class="burger-category" data-base-price="@burger.BasePrice" @(Model.User.Role == "Admin" ? "disabled" : "")>
+                        <option value="Veg">Veg</option>
+                        <option value="Non-veg">Non-veg</option>
+                        <option value="Egg">Egg</option>
+                    </select>
+                </div>
+                <div class="d-flex flex-row mt-2">
+                    <label for="qnumber">Quantity: </label>
+                    <input type="number" min="1" value="1" class="burger-quantity" @(Model.User.Role == "Admin" ? "disabled" : "") />
+                </div>
+                <p class="text-justify para mb-0">
+                    @burger.Description<br><br>
+                </p>
+            </div>
+            <div class="align-items-center align-content-center col-md-3 border-left mt-1">
+                <div class="d-flex flex-row align-items-center">
+                    <h4 class="mr-1 burger-price" data-base-price="@burger.BasePrice">Rs @burger.BasePrice</h4>
+                </div>
+                @if (Model.User.Role == "Admin")
+                {
+                    <div class="d-flex flex-row align-items-center mt-2">
+                        <a class="btn btn-outline-warning btn-sm me-3"
+                           asp-controller="Admin"
+                           asp-action="EditBurger"
+                           asp-route-burgerId="@burger.Id"
+                           asp-route-userId="@Model.User.Id">
+                            <i class="fas fa-edit"></i> Edit
+                        </a>
+                        <a class="btn btn-outline-danger btn-sm"
+                           asp-controller="Admin"
+                           asp-action="DeleteBurger"
+                           asp-route-id="@burger.Id"
+                           asp-route-userId="@Model.User.Id"
+                           onclick="return confirm('Are you sure you want to delete this burger?');">
+                            <i class="fas fa-trash-alt"></i> Delete
+                        </a>
+                    </div>
+                }
+                else
+                {
+                    <div class="d-flex flex-column mt-4">
+                        <button class="btn btn-outline-primary btn-sm mt-2 btnAdd" type="button" data-name="@burger.BurgerName" data-base-price="@burger.BasePrice">Add to Cart</button>
+                    </div>
+                }
+                
+              
+            </div>
+        </div>
+    }
+
+    @if (Model.User.Role == "Admin")
+    {
+                   
+        <div class="buttonViewCard d-flex flex-row justify-content-center">
+            <a class="btn btn-outline-primary btn-sm mt-2" type="button" asp-controller="Admin" asp-action="MenuItem" asp-route-userId="@Model.User.Id">Add Burger</a>
+        </div>
+    }
+    else
+    {
+        
+        <div class="buttonViewCard d-flex flex-row justify-content-center">
+            <a class="btn btn-outline-primary btn-sm mt-2" type="button" asp-controller="BurgerShop" asp-action="Cart">View Cart</a>
+        </div>
+        <div class="buttonViewCard d-flex flex-row justify-content-center">
+            <a class="btn btn-outline-primary btn-sm mt-2" type="button" asp-controller="BurgerShop" asp-action="ViewOrders" asp-route-id="@Model.User.Id">View Order History</a>
+        </div>
+    }
+
+    @* JavaScript to handle price changes and add to cart *@
+    <script>
+        // Existing JavaScript code remains unchanged
+        document.querySelectorAll('.burger-category').forEach(select => {
+            select.addEventListener('change', function () {
+                const basePrice = parseInt(this.getAttribute('data-base-price'));
+                let price = basePrice;
+
+                switch (this.value) {
+                    case 'Veg':
+                        price = basePrice; 
+                        break;
+                    case 'Non-veg':
+                        price = basePrice + 80; 
+                        break;
+                    case 'Egg':
+                        price = basePrice + 50;
+                        break;
+                }
+
+                // Update the displayed price
+                const priceElement = this.closest('.row').querySelector('.burger-price');
+                priceElement.innerText = `Rs ${price}`;
+                // Update the button's data-base-price attribute
+                const button = this.closest('.row').querySelector('.btnAdd');
+                button.setAttribute('data-base-price', price);
+            });
+        });
+
+        // Add to Cart functionality
+        document.querySelectorAll('.btnAdd').forEach(button => {
+            button.addEventListener('click', function () {
+                const burgerName = this.getAttribute('data-name');
+                const categorySelect = this.closest('.row').querySelector('.burger-category');
+                const quantityInput = this.closest('.row').querySelector('.burger-quantity');
+                const priceElement = this.closest('.row').querySelector('.burger-price');
+
+                const category = categorySelect.value;
+                const quantity = parseInt(quantityInput.value);
+                const basePrice = parseInt(this.getAttribute('data-base-price'));
+                const totalPrice = quantity * basePrice;
+
+                const cartItem = {
+                    UserId: @Model.User.Id,
+                    Name: burgerName,
+                    Category: category,
+                    Price: basePrice,
+                    Quantity: quantity,
+                    TotalPrice: totalPrice
+                };
+
+                // Get existing cart from local storage or initialize an empty array
+                let cart = JSON.parse(localStorage.getItem('cart')) || [];
+                cart.push(cartItem); // Add new item to cart
+                localStorage.setItem('cart', JSON.stringify(cart)); // Save updated cart to local storage
+
+                alert(`${burgerName} added to cart!`);
+            });
+        });
+    </script>
+}
+else
+{
+    <h2>No user data available.</h2>
+}

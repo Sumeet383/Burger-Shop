@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Order>
+
+@{
+    ViewBag.Title = "Order List";
+}
+
+<h2 class="text-center my-4">Order History</h2>
+@if (Model == null || !Model.Any())
+{
+    <div class="text-center font-weight-bold">No Orders</div>
+    <!-- Back Button -->
+    <div class="text-center mt-4">
+        <button class="btn btn-secondary" onclick="window.history.back();">Back</button>
+    </div>
+}
+else {
+    <div class="container">
+        <div class="row">
+            @foreach (var order in Model)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm border-light">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="my-0 font-weight-normal">Order ID: @order.Id</h5>
+                        </div>
+                        <div class="card-body">
+                            <h6 class="card-title">Burger Type: @order.BurgerType</h6>
+                            <p class="card-text">Category: @order.BurgerCategory</p>
+                            <p class="card-text">Quantity: @order.Quantity</p>
+                            <p class="card-text">Price per Item: Rs @order.Price.ToString("F2")</p>
+                            <p class="card-text font-weight-bold">Total Price: Rs @order.TotalPrice.ToString("F2")</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <!-- Back Button -->
+        <div class="text-center mt-4">
+            <button class="btn btn-secondary" onclick="window.history.back();">Back</button>
+        </div>
+    </div>
+}
+
+

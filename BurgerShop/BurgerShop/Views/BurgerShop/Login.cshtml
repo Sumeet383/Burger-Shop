@@ -1,0 +1,45 @@
+﻿@model User
+
+<div id="sumeet">
+    <img src="~/images/burgerShop3.jpg" alt="Burger Shop" />
+    @* <img src="~/images/burgerShop3.jpg" alt="Burger Shop" class="img-fluid w position-absolute w-100" style="height: 100vh; object-fit: cover;" /> *@
+    <header class="position-relative top-0 start-0 w-100">
+        <nav class="navbar navbar-expand-sm navbar-dark bg-gradient border-bottom box-shadow mb-0">
+            <div class="container-fluid d-flex justify-content-between">
+
+                <div class="navbar-nav">
+                    <a class="nav-link" asp-controller="BurgerShop" asp-action="Register">Register</a>
+                </div>
+            </div>
+        </nav>
+        <h1 class="position-absolute top-0 start-50 translate-middle-x text-white mb-5">Burger Shop</h1>
+    </header>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <div class="position-absolute top-50 start-50 translate-middle-x w-25 h-25" id="login">
+
+        <form method="post" class="bg-white p-4 rounded shadow" asp-action="LoginPost">
+            <div class="mb-3">
+                <label class="form-label" asp-for="MobileNo"></label>
+                <input type="text" class="form-control" asp-for="MobileNo" />
+                <span class="text-danger" asp-validation-for="MobileNo"></span>
+                <br />
+                <label class="form-label" asp-for="Password"></label>
+                <input type="password" class="form-control" asp-for="Password" />
+                <span class="text-danger" asp-validation-for="Password"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+    </div>
+</div>
+
+@* Client Side Validation *@
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}
+

@@ -1,0 +1,67 @@
+﻿
+@{
+    ViewData["Title"] = "Register";
+}
+@model User
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/BurgerShop.styles.css" asp-append-version="true" />
+</head>
+<body>
+
+    <div id="sumeet">
+        <img src="~/images/burgerShop3.jpg" alt="Burger Shop"/>
+        @* <img src="" alt="Burger Shop" class="img-fluid w position-absolute w-100" style="height: 100vh; object-fit: cover;" /> *@
+    <header class="position-relative top-0 start-0 w-100">
+        <nav class="navbar navbar-expand-sm navbar-dark bg-gradient border-bottom box-shadow mb-0">
+            <div class="container-fluid d-flex justify-content-between">
+
+                <div class="navbar-nav">
+                    <a class="nav-link" asp-controller="BurgerShop" asp-action="Login">Login</a>
+                </div>
+
+                    <div class="navbar-nav">
+                        <a class="nav-link" asp-controller="Admin" asp-action="AdminLogin">Admin</a>
+                    </div>
+            </div>
+        </nav>
+        <h1 class="position-absolute top-0 start-50 translate-middle-x text-white mb-5">Burger Shop</h1>
+    </header>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <div class="position-absolute top-50 start-50  w-25 h-25 translate-middle-x" id="register">
+
+        <form method="post" class="bg-white p-4 rounded shadow" asp-action="RegisterPost">
+            <div class="mb-3">
+                <label class="form-label" asp-for="MobileNo"></label>
+                <input type="text" class="form-control" asp-for="MobileNo" />
+                <span class="text-danger" asp-validation-for="MobileNo"></span>
+                <br/>
+                <label class="form-label" asp-for="Password"></label>
+                <input type="password" class="form-control" asp-for="Password" />
+                <span class="text-danger" asp-validation-for="Password"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">Register</button>
+        </form>
+    </div>
+</div>
+@*     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script> *@
+</body>
+</html>
+@* Client Side Validation *@
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}
