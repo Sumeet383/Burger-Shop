@@ -6,66 +6,39 @@ The BurgerShop application manages users, orders, and a burger menu, featuring u
 
 ## User Registration
 
-<img
-src="
-https://res.cloudinary.com/dhkwphjgs/image/upload/v1723862452/Burger%20Shop%20images/Register_kx2xux.png"
-alt="Register Page" border="0" />
+![Register Page](https://res.cloudinary.com/dhkwphjgs/image/upload/v1723862452/Burger%20Shop%20images/Register_kx2xux.png)
 
 ## User Login
 
-<img
-src="
-https://res.cloudinary.com/dhkwphjgs/image/upload/v1723862452/Burger%20Shop%20images/Login_oc5e7o.png"
-alt="Login Page" border="0" />
+![Register Page](https://res.cloudinary.com/dhkwphjgs/image/upload/v1723862452/Burger%20Shop%20images/Login_oc5e7o.png)
 
 ## Admin Registeration
 
-<img
-src="
-https://res.cloudinary.com/dhkwphjgs/image/upload/v1723862451/Burger%20Shop%20images/Admin_Register_mktvwd.png"
-alt="Admin Register Page" border="0" />
+![Register Page](https://res.cloudinary.com/dhkwphjgs/image/upload/v1723862452/Burger%20Shop%20images/Admin_Register_mktvwd.png)
 
 ## User Burger Page
 
-<img
-src="
-https://res.cloudinary.com/dhkwphjgs/image/upload/v1723862451/Burger%20Shop%20images/User_Burger_Page_t7osaz.png"
-alt="User Burger Page" border="0" />
+![Register Page](https://res.cloudinary.com/dhkwphjgs/image/upload/v1723862452/Burger%20Shop%20images/User_Burger_Page_t7osaz.png)
 
 ## User Cart
 
-<img
-src="
-https://res.cloudinary.com/dhkwphjgs/image/upload/v1723862451/Burger%20Shop%20images/User_Cart_atd5f0.png"
-alt="User Cart" border="0" />
+![Register Page](https://res.cloudinary.com/dhkwphjgs/image/upload/v1723862452/Burger%20Shop%20images/User_Cart_atd5f0.png)
 
 ## User Order History
 
-<img
-src="
-https://res.cloudinary.com/dhkwphjgs/image/upload/v1723862450/Burger%20Shop%20images/User_Order_History_klbx83.png"
-alt="User Order History" border="0" />
+![Register Page](https://res.cloudinary.com/dhkwphjgs/image/upload/v1723862452/Burger%20Shop%20images/User_Order_History_klbx83.png)
 
 ## Admin Burger Page-1
 
-<img
-src="
-https://res.cloudinary.com/dhkwphjgs/image/upload/v1723862451/Burger%20Shop%20images/Admin_Burger_Page_pxrahb.png"
-alt="Admin Burger Page-1" border="0" />
+![Register Page](https://res.cloudinary.com/dhkwphjgs/image/upload/v1723862452/Burger%20Shop%20images/Admin_Burger_Page_pxrahb.png)
 
 ## Admin Burger Page-2
 
-<img
-src="
-https://res.cloudinary.com/dhkwphjgs/image/upload/v1723862451/Burger%20Shop%20images/Admin_Burger_Page2_tlxrta.png"
-alt="Admin Burger Page-2" border="0" />
+![Register Page](https://res.cloudinary.com/dhkwphjgs/image/upload/v1723862452/Burger%20Shop%20images/Admin_Burger_Page2_tlxrta.png)
 
 ## Add new Burgers 
 
-<img
-src="
-https://res.cloudinary.com/dhkwphjgs/image/upload/v1723862450/Burger%20Shop%20images/Admin_Create_Burger_gxob6w.png"
-alt="Admin Burger Page-2" border="0" />
+![Register Page](https://res.cloudinary.com/dhkwphjgs/image/upload/v1723862452/Burger%20Shop%20images/Admin_Create_Burger_gxob6w.png)
 
 
 
